@@ -1,0 +1,5 @@
+name: Closest Zip Code
+type: module
+description: 'Api which gives you closest zip code from array of zip codes.'
+core: '8.x'
+php: 7
