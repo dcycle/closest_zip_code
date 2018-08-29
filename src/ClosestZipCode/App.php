@@ -44,11 +44,18 @@ class App {
       $return['lat'] = $my_location->lat();
       $return['lon'] = $my_location->lon();
       foreach ($all_zips as $zip) {
-        $location = $this->location($zip);
-        $return['zips'][(string) $zip]['km'] = $location->km($my_location);
-        $return['zips'][(string) $zip]['miles'] = $location->miles($my_location);
-        $return['zips'][(string) $zip]['lat'] = $location->lat();
-        $return['zips'][(string) $zip]['lon'] = $location->lon();
+        try {
+          $location = $this->location($zip);
+          $zip_info['km'] = $location->km($my_location);
+          $zip_info['miles'] = $location->miles($my_location);
+          $zip_info['lat'] = $location->lat();
+          $zip_info['lon'] = $location->lon();
+        }
+        catch (\Throwable $e) {
+          $return['errors'][] = $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
+          continue;
+        }
+        $return['zips'][(string) $zip] = $zip_info;
       }
       $return['zips'] = $this->sortByDistance($return['zips']);
     }
@@ -68,7 +75,7 @@ class App {
    * @return Location
    *   A location.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function location(string $zip) : Location {
     return new Location($zip);

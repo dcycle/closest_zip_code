@@ -45,7 +45,7 @@ class Location {
    * @return float
    *   Kms to that location.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function km(Location $start) : float {
     return $this->vincentyGreatCircleDistance($start->lat(), $start->lon(), $this->lat(), $this->lon()) / 1000;
