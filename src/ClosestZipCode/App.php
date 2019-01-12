@@ -38,8 +38,6 @@ class App {
     ];
     $start = $this->microtime(TRUE);
     try {
-      // Preload for faster execution.
-      $this->dataStore()->preload(array_merge([$my_zip], $all_zips));
       $my_location = $this->location($my_zip);
       $return['lat'] = $my_location->lat();
       $return['lon'] = $my_location->lon();

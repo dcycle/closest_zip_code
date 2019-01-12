@@ -32,6 +32,15 @@ trait CommonUtilities {
   }
 
   /**
+   * Mockable wrapper around t().
+   */
+  public function t($string, array $args = array()) {
+    // @codingStandardsIgnoreStart
+    return t($string, $args);
+    // @codingStandardsIgnoreEnd
+  }
+
+  /**
    * Log a string to the watchdog.
    *
    * @param string $string

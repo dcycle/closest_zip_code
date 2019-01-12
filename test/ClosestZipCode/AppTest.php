@@ -62,7 +62,7 @@ class AppTest extends TestCase {
 
     $object->method('dataStore')
       ->willReturn(new class extends DataStore {
-        public function preload(array $zips) {}
+        public function preload() {}
       });
 
     $object->method('location')

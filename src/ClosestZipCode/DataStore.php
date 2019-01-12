@@ -13,6 +13,17 @@ class DataStore {
   use Singleton;
   use CommonUtilities;
 
+  const BOUNDS_HIGHER = 99999;
+  const BOUNDS_LOWER = 500;
+  const FUZZINESS = 50;
+
+  /**
+   * Constructor.
+   */
+  public function __construct() {
+    $this->preload();
+  }
+
   /**
    * Given a zip code, get a latitude and longitude.
    *
@@ -43,36 +54,76 @@ class DataStore {
    *
    * @throws Exception
    */
-  protected function line(string $zip) : array {
-    if (empty($this->lines[$zip])) {
-      throw new \Exception(t('zip @z not found', ['@z' => $zip]));
-    }
-    return $this->lines[$zip];
+  public function line(string $zip) : array {
+    $lines = $this->lines();
+    $i = 0;
+    do {
+      if (!empty($lines[$this->zipOffset($zip, $i)])) {
+        return $lines[$this->zipOffset($zip, $i)];
+      }
+      if (!empty($lines[$this->zipOffset($zip, -$i)])) {
+        return $lines[$this->zipOffset($zip, -$i)];
+      }
+    } while (++$i <= self::FUZZINESS);
+    throw new \Exception($this->t('zip @z not found with fuzziness @f', [
+      '@z' => $this->zipOffset($zip, 0),
+      '@f' => self::FUZZINESS,
+    ]));
   }
 
   /**
-   * Preload all zip codes which will be used, for speedier execution.
+   * Get all lines with all zip codes.
+   *
+   * @return array
+   *   Array of all lines keyed by zip.
+   */
+  public function lines() : array {
+    return $this->lines;
+  }
+
+  /**
+   * Preload all zip codes, for speedier execution.
    *
    * Stores the results internally.
    *
-   * @param array $zips
-   *   An array of zip codes.
+   * @throws Exception
+   */
+  public function preload() {
+    $this->lines = [];
+    $handle = $this->fopen($this->drupalGetPath('module', 'closest_zip_code') . '/data/zipcodes.csv', 'r');
+    while ($row = $this->fgetcsv($handle)) {
+      $this->lines[(string) $row[0]] = $row;
+    }
+    $this->fclose($handle);
+  }
+
+  /**
+   * Function.
+   *
+   * Description.
+   *
+   * @param string $zip
+   *   What.
+   * @param int $offset
+   *   What.
+   *
+   * @return string
+   *   A.
    *
    * @throws Exception
    */
-  public function preload(array $zips) {
-    $this->lines = [];
-    $zips = array_unique($zips);
-    $handle = $this->fopen($this->drupalGetPath('module', 'closest_zip_code') . '/data/zipcodes.csv', 'r');
-    while ($row = $this->fgetcsv($handle)) {
-      if (in_array($row[0], $zips)) {
-        $this->lines[$row[0]] = $row;
-      }
-      if (count($this->lines) == count($zips)) {
-        break;
-      }
+  public function zipOffset(string $zip, int $offset) : string {
+    if ($zip < self::BOUNDS_LOWER) {
+      throw new \Exception('Zip lower than lower bounds.');
     }
-    $this->fclose($handle);
+    if ($zip > self::BOUNDS_HIGHER) {
+      throw new \Exception('Zip higher than higher bounds.');
+    }
+    if (!is_numeric($zip)) {
+      throw new \Exception('Zip must be numeric.');
+    }
+
+    return sprintf('%05d', $zip + $offset);
   }
 
 }
