@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\closest_zip_code\Tests;
+namespace Drupal\Tests\closest_zip_code\Unit\traits;
 
 use Drupal\closest_zip_code\traits\Singleton;
 use PHPUnit\Framework\TestCase;
@@ -12,7 +12,7 @@ class DummyClassUsesSingleton {
 /**
  * Test CommonUtilities.
  *
- * @group myproject
+ * @group closest_zip_code
  */
 class SingletonTest extends TestCase {
 

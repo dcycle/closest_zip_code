@@ -4,4 +4,4 @@
 #
 
 find . -name "*.sh" -print0 | \
-  xargs -0 docker run -v "$(pwd)":/code dcycle/shell-lint
+  xargs -0 docker run --rm -v "$(pwd)":/code dcycle/shell-lint

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\closest_zip_code\Tests;
+namespace Drupal\Tests\closest_zip_code\Unit\ClosestZipCode;
 
 use Drupal\closest_zip_code\ClosestZipCode\DataStore;
 use PHPUnit\Framework\TestCase;
@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test DataStore.
  *
- * @group myproject
+ * @group closest_zip_code
  */
 class DataStoreTest extends TestCase {
 

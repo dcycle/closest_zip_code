@@ -17,7 +17,7 @@ trait CommonUtilities {
   /**
    * Get the data store singleton.
    *
-   * @return DataStore
+   * @return \Drupal\closest_zip_code\ClosestZipCode\DataStore
    *   The DataStore singleton.
    */
   public function dataStore(): DataStore {
@@ -34,7 +34,7 @@ trait CommonUtilities {
   /**
    * Mockable wrapper around t().
    */
-  public function t($string, array $args = array()) {
+  public function t($string, array $args = []) {
     // @codingStandardsIgnoreStart
     return t($string, $args);
     // @codingStandardsIgnoreEnd
@@ -46,7 +46,7 @@ trait CommonUtilities {
    * @param string $string
    *   String to be logged.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function watchdog(string $string) {
     \Drupal::logger('steward_common')->notice($string);
@@ -58,7 +58,7 @@ trait CommonUtilities {
    * @param string $string
    *   String to be logged.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function watchdogError(string $string) {
     \Drupal::logger('steward_common')->error($string);
@@ -69,8 +69,16 @@ trait CommonUtilities {
    *
    * @param \Throwable $t
    *   A \throwable.
+   * @param mixed $message
+   *   See https://api.drupal.org/api/drupal/core%21includes%21bootstrap.inc/function/watchdog_exception/8.2.x.
+   * @param array $variables
+   *   See https://api.drupal.org/api/drupal/core%21includes%21bootstrap.inc/function/watchdog_exception/8.2.x.
+   * @param mixed $severity
+   *   See https://api.drupal.org/api/drupal/core%21includes%21bootstrap.inc/function/watchdog_exception/8.2.x.
+   * @param mixed $link
+   *   See https://api.drupal.org/api/drupal/core%21includes%21bootstrap.inc/function/watchdog_exception/8.2.x.
    */
-  public function watchdogThrowable(\Throwable $t, $message = NULL, $variables = array(), $severity = RfcLogLevel::ERROR, $link = NULL) {
+  public function watchdogThrowable(\Throwable $t, $message = NULL, array $variables = [], $severity = RfcLogLevel::ERROR, $link = NULL) {
 
     // Use a default value if $message is not set.
     if (empty($message)) {

@@ -5,7 +5,6 @@ services:
   drupal:
     build:
       context: .
-      dockerfile: Dockerfile
     volumes:
       - ".:/var/www/html/modules/custom/closest_zip_code"
       - "./docker-resources:/docker-resources"

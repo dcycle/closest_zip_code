@@ -18,6 +18,13 @@ class DataStore {
   const FUZZINESS = 50;
 
   /**
+   * The lines, each of which contains a zip code.
+   *
+   * @var mixed
+   */
+  protected $lines;
+
+  /**
    * Constructor.
    */
   public function __construct() {
@@ -33,7 +40,7 @@ class DataStore {
    * @return array
    *   An array with lat and lon keys.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function latLon(string $zip) : array {
     $line = $this->line($zip);
@@ -52,7 +59,7 @@ class DataStore {
    * @return array
    *   A line with 0 => zip, 1 => lat, 2 => lon.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function line(string $zip) : array {
     $lines = $this->lines();
@@ -65,10 +72,7 @@ class DataStore {
         return $lines[$this->zipOffset($zip, -$i)];
       }
     } while (++$i <= self::FUZZINESS);
-    throw new \Exception($this->t('zip @z not found with fuzziness @f', [
-      '@z' => $this->zipOffset($zip, 0),
-      '@f' => self::FUZZINESS,
-    ]));
+    throw new \Exception('zip ' . $this->zipOffset($zip, 0) . ' not found with fuzziness ' . self::FUZZINESS);
   }
 
   /**
@@ -86,7 +90,7 @@ class DataStore {
    *
    * Stores the results internally.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function preload() {
     $this->lines = [];
@@ -110,7 +114,7 @@ class DataStore {
    * @return string
    *   A.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function zipOffset(string $zip, int $offset) : string {
     if ($zip < self::BOUNDS_LOWER) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\closest_zip_code\Tests;
+namespace Drupal\Tests\closest_zip_code\Unit\ClosestZipCode;
 
 use Drupal\closest_zip_code\ClosestZipCode\Location;
 use PHPUnit\Framework\TestCase;
@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test Location.
  *
- * @group myproject
+ * @group closest_zip_code
  */
 class LocationTest extends TestCase {
 

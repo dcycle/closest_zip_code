@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\closest_zip_code\Tests;
+namespace Drupal\Tests\closest_zip_code\Unit\traits;
 
 use Drupal\closest_zip_code\traits\CommonUtilities;
 use PHPUnit\Framework\TestCase;
@@ -12,7 +12,7 @@ class DummyClassUsesCommonUtilities {
 /**
  * Test CommonUtilities.
  *
- * @group myproject
+ * @group closest_zip_code
  */
 class CommonUtilitiesTest extends TestCase {
 

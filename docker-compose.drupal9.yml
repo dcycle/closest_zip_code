@@ -1,0 +1,7 @@
+---
+version: '3'
+
+services:
+  drupal:
+    build:
+      dockerfile: Dockerfile-drupal9

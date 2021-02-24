@@ -14,12 +14,33 @@ class Location {
   use CommonUtilities;
 
   /**
+   * The latitude.
+   *
+   * @var mixed
+   */
+  protected $lat;
+
+  /**
+   * The longitude.
+   *
+   * @var mixed
+   */
+  protected $lon;
+
+  /**
+   * The zip code.
+   *
+   * @var mixed
+   */
+  protected $zip;
+
+  /**
    * Contructor.
    *
    * @param string $zip
    *   A zip code.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function __construct(string $zip) {
     $this->zip = $zip;
@@ -28,7 +49,7 @@ class Location {
   /**
    * Store the latitude and longitude internally.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   protected function calcLatLon() {
     $latlon = $this->dataStore()->latLon($this->zip);
@@ -57,7 +78,7 @@ class Location {
    * @return float
    *   Latitude.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function lat() : float {
     if (empty($this->lat)) {
@@ -72,7 +93,7 @@ class Location {
    * @return float
    *   Longitude.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function lon() : float {
     if (empty($this->lon)) {
@@ -90,7 +111,7 @@ class Location {
    * @return float
    *   Miles to that location.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function miles(Location $start) : float {
     return $this->km($start) * self::MILES_PER_KM;

@@ -6,16 +6,18 @@
 #
 set -e
 
-echo "Will try to connect to MySQL container until it is up. This can take about 15 seconds."
+TRIES=20
+echo "Will try to connect to MySQL container until it is up. This can take up to $TRIES seconds if the container has just been spun up."
 OUTPUT="ERROR"
-while [[ "$OUTPUT" == *"ERROR"* ]]
+for i in $(seq 1 "$TRIES");
 do
   OUTPUT=$(echo 'show databases'|{ mysql -h mysql -u root --password=drupal 2>&1 || true; })
   if [[ "$OUTPUT" == *"ERROR"* ]]; then
-    echo "MySQL container is not available yet. Should not be long..."
-    sleep 2
+    echo "Try $i of $TRIES. MySQL container is not available yet. Should not be long..."
+    sleep 1
   else
     echo "MySQL is up! Moving on..."
+    break;
   fi
 done
 

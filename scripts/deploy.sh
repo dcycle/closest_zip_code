@@ -11,14 +11,20 @@ echo 'https://hub.docker.com/r/dcycle/drupal/ from the Docker hub. This image'
 echo 'is updated automatically every Wednesday with the latest version of'
 echo 'Drupal and Drush. If the image has changed since the latest deployment,'
 echo 'the environment will be completely rebuild based on this image.'
-docker pull dcycle/drupal:8
+if [ "$1" == 8 ]; then
+  DRUPALVERSION=8
+  docker pull dcycle/drupal:8drush
+else
+  DRUPALVERSION=9
+  docker pull dcycle/drupal:9
+fi
 
 echo ''
 echo '-----'
 echo 'About to start persistent (-d) containers based on the images defined'
-echo 'in ./Dockerfile and ./docker-compose.yml. We are also telling'
-echo 'docker-compose to rebuild the images if they are out of date.'
-docker-compose up -d --build
+echo 'in ./Dockerfile-* files. We are also telling docker-compose to'
+echo 'rebuild the images if they are out of date.'
+docker-compose -f docker-compose.yml -f docker-compose.drupal"$DRUPALVERSION".yml up -d --build
 
 echo ''
 echo '-----'

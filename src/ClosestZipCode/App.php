@@ -29,7 +29,7 @@ class App {
    *   * lat: latitude of my_zip.
    *   * lon: longitude of my_zip.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function closestZipCode(string $my_zip, array $all_zips) : array {
     $return = [
@@ -89,7 +89,7 @@ class App {
    * @return array
    *   Array sorted by distance, e.g. [234 => [km => 3], 123 => [km => 20]].
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function sortByDistance(array $locations) : array {
     if (!uasort($locations, function ($a, $b) {
