@@ -17,12 +17,12 @@ trait Singleton {
   /**
    * Implements the Singleton design pattern.
    *
-   * Only one instance of the Concord class should exist per execution.
+   * Only one instance of the certain classes should exist per execution.
    *
-   * @return Concord
-   *   The single instance of the concord class.
+   * @return object
+   *   The single instance of the singleton.
    */
-  static public function instance() {
+  public static function instance() {
     // See http://stackoverflow.com/questions/15443458
     $class = get_called_class();
 

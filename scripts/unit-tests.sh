@@ -3,5 +3,5 @@
 # Run unit tests.
 #
 
-docker run -v "$(pwd)":/app phpunit/phpunit \
-  --group myproject
+docker run --rm -v "$(pwd)":/app dcycle/phpunit:1 \
+  --group closest_zip_code
