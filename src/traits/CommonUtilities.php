@@ -106,10 +106,17 @@ trait CommonUtilities {
   }
 
   /**
+   * Mockable wrapper around \Drupal::service('extension.path.resolver').
+   */
+  public function extensionPathResolver() {
+    return \Drupal::service('extension.path.resolver');
+  }
+
+  /**
    * Mockable wrapper around drupal_get_path().
    */
   public function drupalGetPath(string $type, string $name) : string {
-    $return = drupal_get_path($type, $name);
+    $return = $this->extensionPathResolver()->getPath($type, $name);
     if (!$return) {
       throw new \Exception('drupal_get_path() returned an empty string');
     }
@@ -121,7 +128,7 @@ trait CommonUtilities {
    */
   public function fgetcsv($handle) {
     $return = fgetcsv($handle);
-    if ($return === NULL) {
+    if (!$return) {
       throw new \Exception('fgetcsv() failure');
     }
     return $return;
