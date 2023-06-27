@@ -1,41 +1,38 @@
 #!/bin/bash
 #
-# Assuming you have the latest version Docker installed, this script will
-# fully create or update your development environment.
+# Deploy a development or testing environment.
 #
 set -e
 
-echo ''
-echo 'About to try to get the latest version of'
-echo 'https://hub.docker.com/r/dcycle/drupal/ from the Docker hub. This image'
-echo 'is updated automatically every Wednesday with the latest version of'
-echo 'Drupal and Drush. If the image has changed since the latest deployment,'
-echo 'the environment will be completely rebuild based on this image.'
-if [ "$1" == 8 ]; then
-  DRUPALVERSION=8
-  docker pull dcycle/drupal:8drush
-else
-  DRUPALVERSION=9
-  docker pull dcycle/drupal:9
+if [ "$1" != "9" ] && [ "$1" != "10" ]; then
+  >&2 echo "Please specify 9 or 10"
+  exit 1;
 fi
+
+echo ''
+echo '-----'
+echo 'About to create the closest_zip_code_default network if it does not exist,'
+echo 'because we need it to have a predictable name when we try to connect'
+echo 'other containers to it (for example browser testers).'
+echo 'See https://github.com/docker/compose/issues/3736.'
+docker network ls | grep closest_zip_code_default || docker network create closest_zip_code_default
 
 echo ''
 echo '-----'
 echo 'About to start persistent (-d) containers based on the images defined'
 echo 'in ./Dockerfile-* files. We are also telling docker-compose to'
 echo 'rebuild the images if they are out of date.'
-docker-compose -f docker-compose.yml -f docker-compose.drupal"$DRUPALVERSION".yml up -d --build
+docker-compose -f docker-compose.yml -f docker-compose."$1".yml up -d --build
 
 echo ''
 echo '-----'
-echo 'Running the deploy script on the running containers. This installs'
-echo 'Drupal if it is not yet installed.'
-docker-compose exec drupal /docker-resources/scripts/deploy-on-container.sh
+echo 'Running the deploy scripts on the container.'
+docker-compose exec -T drupal /bin/bash -c 'cd ./modules/custom/closest_zip_code/scripts/lib/docker-resources && ./deploy.sh'
 
 echo ''
 echo '-----'
 echo ''
 echo 'If all went well you can now access your site at:'
+echo ''
 ./scripts/uli.sh
-echo '-----'
 echo ''

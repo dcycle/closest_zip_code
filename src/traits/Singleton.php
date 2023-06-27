@@ -10,7 +10,7 @@ trait Singleton {
   /**
    * Interal instance variable used with the instance() method.
    *
-   * @var object
+   * @var object|null
    */
   static private $instance;
 
@@ -26,10 +26,7 @@ trait Singleton {
     // See http://stackoverflow.com/questions/15443458
     $class = get_called_class();
 
-    // Not sure why the linter tells me $instance is not used.
-    // @codingStandardsIgnoreStart
     if (!$class::$instance) {
-    // @codingStandardsIgnoreEnd
       $class::$instance = new $class();
     }
     return $class::$instance;
