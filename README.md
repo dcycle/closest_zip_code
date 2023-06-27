@@ -3,7 +3,7 @@ Closest Zip Code
 
 [![CircleCI](https://circleci.com/gh/dcycle/closest_zip_code.svg?style=svg)](https://circleci.com/gh/dcycle/closest_zip_code)
 
-A Drupal 8 module which allows you get a closest zip code to another zip code. An API is provided, but no user interface.
+A Drupal module which allows you get a closest zip code to another zip code. An API is provided, but no user interface.
 
 Usage
 -----
