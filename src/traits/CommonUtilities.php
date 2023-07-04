@@ -127,11 +127,7 @@ trait CommonUtilities {
    * Mockable wrapper around fgetcsv().
    */
   public function fgetcsv($handle) {
-    $return = fgetcsv($handle);
-    if (!$return) {
-      throw new \Exception('fgetcsv() failure');
-    }
-    return $return;
+    return fgetcsv($handle);
   }
 
   /**

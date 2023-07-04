@@ -2,8 +2,8 @@
 
 namespace Drupal\closest_zip_code\ClosestZipCode;
 
-use Drupal\closest_zip_code\traits\Singleton;
 use Drupal\closest_zip_code\traits\CommonUtilities;
+use Drupal\closest_zip_code\traits\Singleton;
 
 /**
  * Represents the Closest Zip Code API.
