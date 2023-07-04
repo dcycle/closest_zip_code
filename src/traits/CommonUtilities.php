@@ -129,7 +129,7 @@ trait CommonUtilities {
   public function fgetcsv($handle) {
     $return = fgetcsv($handle);
     if (!$return) {
-      throw new \Exception('fgetcsv() failure');
+      throw new \Exception('fgetcsv() failure for ' . $handle);
     }
     return $return;
   }
