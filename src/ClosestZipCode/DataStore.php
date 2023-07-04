@@ -94,9 +94,7 @@ class DataStore {
    */
   public function preload() {
     $this->lines = [];
-    $fullPath = $this->drupalGetPath('module', 'closest_zip_code') . '/data/zipcodes.csv';
-    $handle = $this->fopen($fullPath, 'r');
-    print_r($fullPath);
+    $handle = $this->fopen($this->drupalGetPath('module', 'closest_zip_code') . '/data/zipcodes.csv', 'r');
     while ($row = $this->fgetcsv($handle)) {
       $this->lines[(string) $row[0]] = $row;
     }
