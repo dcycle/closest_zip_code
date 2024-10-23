@@ -2,9 +2,9 @@
 
 namespace Drupal\closest_zip_code\traits;
 
-use Drupal\closest_zip_code\ClosestZipCode\DataStore;
 use Drupal\Core\Logger\RfcLogLevel;
 use Drupal\Core\Utility\Error;
+use Drupal\closest_zip_code\ClosestZipCode\DataStore;
 
 /**
  * General utilities trait.

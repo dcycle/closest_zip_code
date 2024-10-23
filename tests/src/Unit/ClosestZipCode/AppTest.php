@@ -14,23 +14,44 @@ use PHPUnit\Framework\TestCase;
  */
 class AppTest extends TestCase {
 
+  /**
+   *
+   */
   public function callbackLocation($zip) {
     return new class($zip) extends Location {
+
       public function __construct($zip) {
         $this->zip = $zip;
       }
+
+      /**
+       *
+       */
       public function km(Location $start) : float {
         return round(111 * $this->zip, 2);
       }
+
+      /**
+       *
+       */
       public function miles(Location $start) : float {
         return round(999 * $this->zip, 2);
       }
+
+      /**
+       *
+       */
       public function lat() : float {
         return round(111.111 * $this->zip, 2);
       }
+
+      /**
+       *
+       */
       public function lon() : float {
         return round(999.999 * $this->zip, 2);
       }
+
     };
   }
 
@@ -62,11 +83,16 @@ class AppTest extends TestCase {
 
     $object->method('dataStore')
       ->willReturn(new class extends DataStore {
+
+        /**
+         *
+         */
         public function preload() {}
+
       });
 
     $object->method('location')
-      ->will($this->returnCallback(array($this, 'callbackLocation')));
+      ->will($this->returnCallback([$this, 'callbackLocation']));
 
     $object->method('microtime')
       ->willReturn(0);

@@ -5,8 +5,12 @@ namespace Drupal\Tests\closest_zip_code\Unit\traits;
 use Drupal\closest_zip_code\traits\CommonUtilities;
 use PHPUnit\Framework\TestCase;
 
+/**
+ *
+ */
 class DummyClassUsesCommonUtilities {
   use CommonUtilities;
+
 }
 
 /**
